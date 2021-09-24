@@ -60,7 +60,7 @@ function clearScreen()
 
     // white background with black border
     context.fillStyle = '#ffffff'; context.fillRect(0,0,320,240);
-    context.beginPath(); context.rect(0,0,320,240); context.stroke();
+    context.strokeStyle = '#000000'; context.strokeRect(0,0,320,240);
     
     // reset text output
     textRow = 1
