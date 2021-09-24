@@ -34,10 +34,12 @@ function gameLoop(timestamp)
         update(updateFrameTimeMS / 1000);
         cumulativeUpdateTimeMS += updateFrameTimeMS
     }
-    writeText("Time(ms): " + cumulativeUpdateTimeMS)
+    debugText("Time(ms): " + cumulativeUpdateTimeMS)
     drawFPS(timestamp);
 
     render();
+    renderDebugText();
+
     window.requestAnimationFrame(gameLoop); // request next frame
 }
 
@@ -63,7 +65,7 @@ function clearScreen()
     context.strokeStyle = '#000000'; context.strokeRect(0,0,320,240);
     
     // reset text output
-    textRow = 1
+    debugTextRows = []
 }
 
 function render()
@@ -77,17 +79,23 @@ function render()
 function drawFPS(timestamp)
 {
     let fps = Math.round(1 / ((timestamp - prevFrameTimeMS) / 1000));
-    writeText("FPS: " + fps);
+    debugText("FPS: " + fps);
     prevFrameTimeMS = timestamp;
 }
 
-let textRow;
-function writeText(text)
+let debugTextRows;
+function debugText(text)
+{
+    debugTextRows.push(text)
+}
+
+function renderDebugText()
 {
     context.font = '12px Arial';
     context.fillStyle = 'black';
-    context.fillText(text, 5, 12*textRow)
-    textRow += 1
+    debugTextRows.forEach(function(item, index, array) {
+        context.fillText(item, 5, 12*(index+1))
+    })
 }
 
 </script></body></html>
